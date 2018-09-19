@@ -8,6 +8,7 @@ Chromosome Atlas of Nepal -- Database and Book
 - Projects (1) BibTeX drafts, (2) Review, (3) Database Schema
 - Created MySQL project in SQLdbm (completed first version of Schema)
 - Explained the project high-level to Suraj
+- Created Google Sheets for Acanthaceae and Aceraceae
 
 # Schema
 

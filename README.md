@@ -10,3 +10,5 @@ Chromosome Atlas of Nepal -- Database and Book
 - Explained the project high-level to Suraj
 
 # Schema
+
+![alt text](DataBaseSchemaVersion1.png)

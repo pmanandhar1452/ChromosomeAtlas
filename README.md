@@ -5,4 +5,4 @@ Chromosome Atlas of Nepal -- Database and Book
 ## 2018-Sep-19
 
 - sent github invites
-- 
+- Projects (1) BibTeX drafts, (2) Review, (3) Database Schema

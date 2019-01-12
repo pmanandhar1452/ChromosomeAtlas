@@ -1,25 +1,48 @@
 import re
 
 class LatexGenerator:
+
+    def __emphasis_first_word(self, in_str):
+        if in_str == '':
+            raise Exception("Expecting non-empty string")
+
+        m = re.match("\s*(\w+)(.*)", in_str, re.I)
+        if m:
+            # print(in_str)
+            # print(m.groups())
+            return '{\\em ' + m.group(1) + '}' +  self.__format_sc_post_str(m.group(2))
+        else:
+            return in_str
+
+    def __format_var_sep(self, sep_str, split_str):
+        out_str = split_str[0]
+        for i in range(1, len(split_str)):
+            out_str += sep_str + ' ' + self.__emphasis_first_word (split_str[i]) 
+        return out_str
+
+    def __format_sc_post_str(self, in_str):
+        if in_str == '':
+            return in_str
+        # see if we can match subsp.
+        split_str = in_str.split('subsp.')
+        if len(split_str) > 1: 
+            return self.__format_var_sep('subsp.', split_str)
+        # see if we can match ssp.
+        split_str = in_str.split('ssp.')
+        if len(split_str) > 1: 
+            return self.__format_var_sep('ssp.', split_str)
+        # see if we can match var.
+        split_str = in_str.split('var.')
+        if len(split_str) > 1: 
+            return self.__format_var_sep('var.', split_str)
+        
+        return in_str
+
     def format_scientific_name(self, in_str):
         in_str = in_str.replace('\n', ' ')
-        matchObj = re.match( r'\s*(\w+\.?\s+\w+)\s+(var|ssp|subsp)\.\s+(\w+)(\s+.*)?', in_str, re.I)
-        if matchObj:
-            num_groups = len(matchObj.groups())
-            if num_groups == 4:
-                final_string = matchObj.group(4)
-            else:
-                final_string = ''
-            out_str = '{\\em ' + matchObj.group(1) + '} ' + matchObj.group(2) \
-                + '. {\\em ' + matchObj.group(3) + '}' + final_string
+        m = re.match(r'\s*(\w+\.?\s+\w+)(.*)', in_str, re.I) # match first two words
+        if m:
+            out_str = '{\\em ' + m.group(1) + '}' + self.__format_sc_post_str(m.group(2))
+            return out_str
         else:
-            matchObj = re.match( r'\s*(\w+\s+\w+)(.*)', in_str, re.I)
-            if matchObj:
-                out_str = '{\\em ' + matchObj.group(1) + '}' + matchObj.group(2)
-            else:
-                matchObj = re.match( r'\s*(\w.\s+\w+)(.*)', in_str, re.I)
-                if matchObj:
-                    return '{\\em ' + matchObj.group(1) + '}' + matchObj.group(2)
-                else:
-                    out_str = in_str
-        return out_str
+            raise Exception('Scientific name does not seem to be in correct format')

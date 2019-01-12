@@ -1,5 +1,5 @@
+
 import re
-from __future__ import print_function
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
@@ -121,10 +121,10 @@ class LatexGenerator:
         # The file token.json stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
         # time.
-        store = file.Storage('token.json')
+        store = file.Storage('output/token.json')
         creds = store.get()
         if not creds or creds.invalid:
-            flow = client.flow_from_clientsecrets('credentials.json', SCOPES)
+            flow = client.flow_from_clientsecrets('output/credentials.json', self.SCOPES)
             creds = tools.run_flow(flow, store)
         service = build('sheets', 'v4', http=creds.authorize(Http()))
 
@@ -137,14 +137,14 @@ class LatexGenerator:
         if not values:
             print('No data found.')
         else:
-            self.latex_file = open(family_name + '.table.tex', 'w')
+            self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
             for i in range(0, len(values)):
                 # Print columns A and E, which correspond to indices 0 and 4.
                 self.generate_latex_row(values[i], i==0)
             self.latex_file.close()
     
     def generate_latex_all_families(self):
-        all_families_file = open('families.tex', 'w')
+        all_families_file = open('output/families.tex', 'w')
         for family in self.SPREADSHEET_DICT.keys():
             self.generate_latex(family)
             all_families_file.write('\\include{' + family + '}\n')

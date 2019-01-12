@@ -4,18 +4,20 @@ import ChromosomeAtlas.LatexGenerator as LatexGen
 class TestLatexGenerator(unittest.TestCase):
 
     SCIENTIFIC_NAME_TRANSFORM = {
-       'A. graveolens L.': '{\\em A. graveolens} L.',
-       'Acronema tenerum (DC.) Edgew.': '{\\em Acronema tenerum} (DC.) Edgew.',
-       'Bupleurum candoleii Wall. Ex DC.': '{\\em Bupleurum candoleii} Wall. Ex DC.',
-       'I. sikkimensis': '{\\em I. sikkimensis}',
-       'Achyranthes aspera var. porphyristachya (Wall. ex Moq.) Hook. f.':
+        'A. graveolens L.': '{\\em A. graveolens} L.',
+        'Acronema tenerum (DC.) Edgew.': '{\\em Acronema tenerum} (DC.) Edgew.',
+        'Bupleurum candoleii Wall. Ex DC.': '{\\em Bupleurum candoleii} Wall. Ex DC.',
+        'I. sikkimensis': '{\\em I. sikkimensis}',
+        'Achyranthes aspera var. porphyristachya (Wall. ex Moq.) Hook. f.':
             '{\\em Achyranthes aspera} var. {\\em porphyristachya} (Wall. ex Moq.) Hook. f.',
-       'Astragalus stipulatus var. phuchokiensis H. Ohashi':
+        'Astragalus stipulatus var. phuchokiensis H. Ohashi':
            '{\\em Astragalus stipulatus} var. {\\em phuchokiensis} H. Ohashi',
-       'D. podocarpum ssp. fallax (Schindl.) H. Ohashi':
+        'D. podocarpum ssp. fallax (Schindl.) H. Ohashi':
            '{\\em D. podocarpum} ssp. {\\em fallax} (Schindl.) H. Ohashi',
-       'D. podocarpum subsp. oxyphyllum var. mandschuricum Maxim.':
-           '{\\em D. podocarpum} subsp. {\\em oxyphyllum} var. {\\em mandschuricum} Maxim.'
+        'D. podocarpum subsp. oxyphyllum var. mandschuricum Maxim.':
+           '{\\em D. podocarpum} subsp. {\\em oxyphyllum} var. {\\em mandschuricum} Maxim.',
+        'D. elegans DC. ssp. elegans var. elegans':
+            '{\\em D. elegans} DC. ssp. {\\em elegans} var. {\\em elegans}'
     }
 
     def test_format_scientific_name (self):

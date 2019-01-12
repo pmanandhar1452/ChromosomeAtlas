@@ -91,13 +91,18 @@ class LatexGenerator:
         else:
             raise Exception('Scientific name does not seem to be in correct format')
 
+    def generate_latex_row_chr_num(self, row):
+        # output chromosome numbers and citation as a separate row
+        self.output_latex_string('\\noindent \\textbf{$' + row[4] + '$}: ')
+        self.output_citations(row[5] + '\n\n')
+
     def generate_latex_row(self, row, isfirst):
         if (len(row) == 0): # skip if empty row
             return
         row = self.normalize_row(row)
         if (row[0] != ''):
             self.output_latex_string(
-                '\\section{' + self.format_scientific_name(row[0]) + '}')
+                '\\section{' + self.format_scientific_name(row[0]) + '}\n')
             if row[3] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Synonyms}: ' + 
@@ -108,14 +113,18 @@ class LatexGenerator:
                     + row[1] + ' \\end{hindi}\n\n')
             if row[2] != '':
                 self.output_latex_string(
-                    '\\noindent \\textbf{Common name(s) in English language}: ' + row[2] + '\n\n')
+                    '\\noindent \\textbf{Common name(s) in English language}: ' \
+                    + row[2].title() + '\n\n')
             if row[7] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Uses}: ' + row[7] + '\n\n')
             if row[8] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Distribution/Locality (msl)}: ' \
-                    + row[8] + '\n\n')
+                    + row[8] + '\n\n\\vspace{1em}\n\n')
+
+        # output chromosome numbers and citation as a separate row
+        self.generate_latex_row_chr_num(row)
 
     def generate_latex(self, family_name):
         # The file token.json stores the user's access and refresh tokens, and is
@@ -139,7 +148,6 @@ class LatexGenerator:
         else:
             self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
             for i in range(0, len(values)):
-                # Print columns A and E, which correspond to indices 0 and 4.
                 self.generate_latex_row(values[i], i==0)
             self.latex_file.close()
     
@@ -148,7 +156,7 @@ class LatexGenerator:
         for family in self.SPREADSHEET_DICT.keys():
             self.generate_latex(family)
             all_families_file.write('\\include{' + family + '}\n')
-            family_tex_file = open(family + '.tex', 'w')
+            family_tex_file = open('output/' + family + '.tex', 'w')
             family_tex_file.write('\\chapter{' + family + '}\n\n' +
                 '\\input{' + family + '.table.tex}\n\n' + 
                                 '\\bibliographystyle{plainnat}\n' + 

@@ -110,7 +110,8 @@ class LatexGenerator:
             if row[1] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Common name(s) in use in Nepal}: \\begin{hindi} ' \
-                    + row[1] + ' \\end{hindi}\n\n')
+                    + '{\large ' \
+                    + row[1] + '} \\end{hindi}\n\n')
             if row[2] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Common name(s) in English language}: ' \

@@ -9,7 +9,9 @@ class TestLatexGenerator(unittest.TestCase):
        'Bupleurum candoleii Wall. Ex DC.': '{\\em Bupleurum candoleii} Wall. Ex DC.',
        'I. sikkimensis': '{\\em I. sikkimensis}',
        'Achyranthes aspera var. porphyristachya (Wall. ex Moq.) Hook. f.':
-                '{\\em Achyranthes aspera} var. {\\em porphyristachya} (Wall. ex Moq.) Hook. f.'
+                '{\\em Achyranthes aspera} var. {\\em porphyristachya} (Wall. ex Moq.) Hook. f.',
+        'Astragalus stipulatus var. phuchokiensis H. Ohashi':
+                '{\\em Astragalus stipulatus} var. {\\em phuchokiensis} H. Ohashi'
     }
 
     def test_parse_scientific_name (self):

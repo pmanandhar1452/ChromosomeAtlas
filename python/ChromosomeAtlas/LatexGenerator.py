@@ -107,8 +107,6 @@ class LatexGenerator:
         self.output_citations(row[5] + '\n\n')
 
     def generate_latex_row(self, row):
-        if (len(row) == 0): # skip if empty row
-            return
         if self.is_heading_row(row):
             self.output_latex_string(
                 '\\section{' + self.format_scientific_name(row[0]) + '}\n')
@@ -166,7 +164,10 @@ class LatexGenerator:
         else:
             self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
             for i in range(0, len(values)):
-                row = self.normalize_row(values[i])
+                row = values[i]
+                if (len(row) == 0): # skip if empty row
+                    continue
+                row = self.normalize_row(row)
                 if (self.is_heading_row(row)):
                     done_code = row[self.DONE_CODE_INDEX]
                     if done_code.find('N') == -1:

@@ -8,6 +8,9 @@ import string
 class LatexGenerator:
 
     latex_file = None
+    current_genus = ''
+    num_species_in_fam = 0
+    num_genus_in_fam = 0
 
     # If modifying these scopes, delete the file token.json.
     SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -25,6 +28,7 @@ class LatexGenerator:
     DONE_CODE_INDEX = 10
     WORLD_DIST_INDEX = 8
     NEPAL_DIST_INDEX = 9
+    SPECIES_INDEX = 0
     NEPAL_SEARCH_WORDS = ['Godawari', 'Patan', 'Kuleswor']
 
     def normalize_row(self, row):
@@ -41,7 +45,7 @@ class LatexGenerator:
         self.latex_file.write(strout)
 
     def is_heading_row(self, row):
-        return (row[0] != '')
+        return (row[self.SPECIES_INDEX] != '')
 
     def output_latex_string_noreplace(self, str):
         self.latex_file.write(str)
@@ -93,6 +97,11 @@ class LatexGenerator:
         
         return in_str
 
+    def get_genus(self, in_str):
+        in_str = in_str.replace('\n', ' ')
+        in_str = in_str.strip(' ,.')
+        return in_str.partition(' ')[0]
+
     def format_scientific_name(self, in_str):
         in_str = in_str.replace('\n', ' ')
         print(in_str)
@@ -111,7 +120,7 @@ class LatexGenerator:
     def generate_latex_row(self, row):
         if self.is_heading_row(row):
             self.output_latex_string(
-                '\\section{' + self.format_scientific_name(row[0]) + '}\n')
+                '\\section{' + self.format_scientific_name(row[self.SPECIES_INDEX]) + '}\n')
             if row[3] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Synonyms}: ' + 
@@ -147,10 +156,10 @@ class LatexGenerator:
         # The file token.json stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
         # time.
-        store = file.Storage('output/token.json')
+        store = file.Storage('token.json')
         creds = store.get()
         if not creds or creds.invalid:
-            flow = client.flow_from_clientsecrets('output/credentials.json', self.SCOPES)
+            flow = client.flow_from_clientsecrets('credentials.json', self.SCOPES)
             creds = tools.run_flow(flow, store)
         service = build('sheets', 'v4', http=creds.authorize(Http()))
 
@@ -171,6 +180,11 @@ class LatexGenerator:
                     continue
                 row = self.normalize_row(row)
                 if (self.is_heading_row(row)):
+                    self.num_species_in_fam += 1
+                    row_genus = self.get_genus(row[self.SPECIES_INDEX])
+                    if row_genus != self.current_genus:
+                        self.num_genus_in_fam += 1
+                        self.current_genus = row_genus
                     done_code = row[self.DONE_CODE_INDEX]
                     if done_code.find('N') == -1:
                         self.fix_nepal_distribution(sheet, sheet_id, row, i)
@@ -224,14 +238,30 @@ class LatexGenerator:
     def generate_latex_all_families(self):
         all_families_file = open('output/families.tex', 'w')
         for family in sorted(self.SPREADSHEET_DICT):
+            self.current_genus = ''
+            self.num_genus_in_fam = 0
+            self.num_species_in_fam = 0
             self.generate_latex(family)
             all_families_file.write('\\include{' + family + '}\n')
             family_tex_file = open('output/' + family + '.tex', 'w')
             family_tex_file.write('\\chapter{' + family + '}\n\n' +
+                '\\input{' + family + '.count.tex}\n\n' +   
                 '\\input{' + family + '.table.tex}\n\n' + 
                                 '\\bibliographystyle{plainnat}\n' + 
                                 '\\bibliography{Bibliography}\n')
             family_tex_file.close()
+            family_count_file = open('output/' + family + '.count.tex', 'w')
+            if self.num_genus_in_fam == 1:
+                genus_word = 'genus'
+            else:
+                genus_word = 'genera'
+
+            family_count_file.write(
+                '\n\nThere are %d %s and %d species reported with chromosome counts  '
+                'in Nepal in this family.\n\n'%
+                    (self.num_genus_in_fam, genus_word, self.num_species_in_fam)
+            )
+            family_count_file.close()
         all_families_file.close()
             
 

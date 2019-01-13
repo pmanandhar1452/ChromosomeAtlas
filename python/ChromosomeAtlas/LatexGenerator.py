@@ -22,12 +22,16 @@ class LatexGenerator:
         'Agavaceae'  : '1IadRjWtV_dEsMEgmNhAFY2-viQ0Ug7fUmSyuh4km2Uk',
         'Aizoiceae'  : '1j_GgOSlBSEuzgbUOFU5p9eS8iixgbG-iASnL7u0g718',  
         'Alangiaceae': '1Z9bLIm1q21cLek5cq6_dv9eAmCjrlLhekkWxxDPLmhE',
-        'Alismataceae': '1Vq-Z6vmNsLbQzu3ISfae3vmG3xMPg3HcAeH7dZsSA_8'
+        'Alismataceae': '1Vq-Z6vmNsLbQzu3ISfae3vmG3xMPg3HcAeH7dZsSA_8',
+        'Amaranthaceae': '1UpAvdWhzjti04YIXxa5_FWbbfCQC2Z3hVcryn-VA9xQ',
+        'Amaryllidaceae': '1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ'
         }
     RANGE_NAME = 'Sheet1!A2:K'
     DONE_CODE_INDEX = 10
     WORLD_DIST_INDEX = 8
     NEPAL_DIST_INDEX = 9
+    CHR_NUM_INDEX = 4
+    CITATION_INDEX = 5
     SPECIES_INDEX = 0
     NEPAL_SEARCH_WORDS = ['Godawari', 'Patan', 'Kuleswor']
 
@@ -114,8 +118,10 @@ class LatexGenerator:
 
     def generate_latex_row_chr_num(self, row):
         # output chromosome numbers and citation as a separate row
-        self.output_latex_string('\\noindent \\textbf{$' + row[4] + '$}: ')
-        self.output_citations(row[5] + '\n\n')
+        chr_num = row[self.CHR_NUM_INDEX].strip(',. ')
+        citations = row[self.CITATION_INDEX].strip(',. ')
+        self.output_latex_string('\\noindent \\textbf{$' + chr_num + '$}: ')
+        self.output_citations(citations + '\n\n')
 
     def generate_latex_row(self, row):
         if self.is_heading_row(row):

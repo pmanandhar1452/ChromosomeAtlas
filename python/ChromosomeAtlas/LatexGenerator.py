@@ -154,14 +154,14 @@ class LatexGenerator:
     
     def generate_latex_all_families(self):
         all_families_file = open('output/families.tex', 'w')
-        for family in self.SPREADSHEET_DICT.keys():
+        for family in sorted(self.SPREADSHEET_DICT):
             self.generate_latex(family)
             all_families_file.write('\\include{' + family + '}\n')
             family_tex_file = open('output/' + family + '.tex', 'w')
             family_tex_file.write('\\chapter{' + family + '}\n\n' +
                 '\\input{' + family + '.table.tex}\n\n' + 
                                 '\\bibliographystyle{plainnat}\n' + 
-                                '\\bibliography{' + family + '}\n')
+                                '\\bibliography{Bibliography}\n')
             family_tex_file.close()
         all_families_file.close()
             

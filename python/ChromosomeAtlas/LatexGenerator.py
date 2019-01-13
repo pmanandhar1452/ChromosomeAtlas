@@ -3,24 +3,31 @@ import re
 from googleapiclient.discovery import build
 from httplib2 import Http
 from oauth2client import file, client, tools
+import string
 
 class LatexGenerator:
 
     latex_file = None
 
     # If modifying these scopes, delete the file token.json.
-    SCOPES = 'https://www.googleapis.com/auth/spreadsheets.readonly'
+    SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
 
     # The ID and range of spreadsheets.
-    SPREADSHEET_DICT = {'Acanthaceae': '1vbkdYUAIzmHhqRZCPx_wvImylWM_BqxcuhY2aIKZfuw', 
-                        'Aceraceae'  : '1RqlxSLZs8Uhz2xyCFRq-541jyIqZRUejcGVX_WIPblw',
-                        'Agavaceae'  : '1IadRjWtV_dEsMEgmNhAFY2-viQ0Ug7fUmSyuh4km2Uk',
-                        'Alangiaceae': '1Z9bLIm1q21cLek5cq6_dv9eAmCjrlLhekkWxxDPLmhE',
-                        'Aizoiceae'  : '1j_GgOSlBSEuzgbUOFU5p9eS8iixgbG-iASnL7u0g718'  }
-    RANGE_NAME = 'Sheet1!A2:I'
+    SPREADSHEET_DICT = {
+        'Acanthaceae': '1vbkdYUAIzmHhqRZCPx_wvImylWM_BqxcuhY2aIKZfuw', 
+        'Aceraceae'  : '1RqlxSLZs8Uhz2xyCFRq-541jyIqZRUejcGVX_WIPblw',
+        'Agavaceae'  : '1IadRjWtV_dEsMEgmNhAFY2-viQ0Ug7fUmSyuh4km2Uk',
+        'Aizoiceae'  : '1j_GgOSlBSEuzgbUOFU5p9eS8iixgbG-iASnL7u0g718',  
+        'Alangiaceae': '1Z9bLIm1q21cLek5cq6_dv9eAmCjrlLhekkWxxDPLmhE',
+        }
+    RANGE_NAME = 'Sheet1!A2:K'
+    DONE_CODE_INDEX = 10
+    WORLD_DIST_INDEX = 8
+    NEPAL_DIST_INDEX = 9
+    NEPAL_SEARCH_WORDS = ['Godawari', 'Patan', 'Kuleswor']
 
     def normalize_row(self, row):
-        TOTAL_COLS = 9
+        TOTAL_COLS = 11
         for i in range(len(row), TOTAL_COLS):
             row.append('')
         return row
@@ -31,6 +38,9 @@ class LatexGenerator:
         strout = strout.replace('%', '\\%')
         strout = strout.replace(',', ', ')
         self.latex_file.write(strout)
+
+    def is_heading_row(self, row):
+        return (row[0] != '')
 
     def output_latex_string_noreplace(self, str):
         self.latex_file.write(str)
@@ -96,11 +106,10 @@ class LatexGenerator:
         self.output_latex_string('\\noindent \\textbf{$' + row[4] + '$}: ')
         self.output_citations(row[5] + '\n\n')
 
-    def generate_latex_row(self, row, isfirst):
+    def generate_latex_row(self, row):
         if (len(row) == 0): # skip if empty row
             return
-        row = self.normalize_row(row)
-        if (row[0] != ''):
+        if self.is_heading_row(row):
             self.output_latex_string(
                 '\\section{' + self.format_scientific_name(row[0]) + '}\n')
             if row[3] != '':
@@ -115,17 +124,24 @@ class LatexGenerator:
             if row[2] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Common name(s) in English language}: ' \
-                    + row[2].title() + '\n\n')
+                    + string.capwords(row[2], " ") + '\n\n')
             if row[7] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Uses}: ' + row[7] + '\n\n')
-            if row[8] != '':
+            if row[self.NEPAL_DIST_INDEX] != '':
                 self.output_latex_string(
-                    '\\noindent \\textbf{Distribution/Locality (msl)}: ' \
-                    + row[8] + '\n\n\\vspace{1em}\n\n')
-
+                    '\\noindent \\textbf{Distribution in Nepal/Local reports}: ' \
+                    + self.add_msl(row[self.NEPAL_DIST_INDEX]) + '\n\n')
+            if row[self.WORLD_DIST_INDEX] != '':
+                self.output_latex_string(
+                    '\\noindent \\textbf{World Distribution}: ' \
+                    + row[self.WORLD_DIST_INDEX] + '\n\n\\vspace{1em}\n\n')
+            
         # output chromosome numbers and citation as a separate row
         self.generate_latex_row_chr_num(row)
+
+    def add_msl(self, in_str):
+       return re.sub(r'([0-9]+)', r'\1 msl', in_str)
 
     def generate_latex(self, family_name):
         # The file token.json stores the user's access and refresh tokens, and is
@@ -140,7 +156,8 @@ class LatexGenerator:
 
         # Call the Sheets API
         sheet = service.spreadsheets()
-        result = sheet.values().get(spreadsheetId=self.SPREADSHEET_DICT[family_name],
+        sheet_id = self.SPREADSHEET_DICT[family_name]
+        result = sheet.values().get(spreadsheetId=sheet_id,
                                     range=self.RANGE_NAME).execute()
         values = result.get('values', [])
 
@@ -149,9 +166,58 @@ class LatexGenerator:
         else:
             self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
             for i in range(0, len(values)):
-                self.generate_latex_row(values[i], i==0)
+                row = self.normalize_row(values[i])
+                if (self.is_heading_row(row)):
+                    done_code = row[self.DONE_CODE_INDEX]
+                    if done_code.find('N') == -1:
+                        self.fix_nepal_distribution(sheet, sheet_id, row, i)
+                self.generate_latex_row(row)
             self.latex_file.close()
     
+    def move_dist_data(self, row, move_str):
+        if not (row[self.NEPAL_DIST_INDEX].isspace()):
+            row[self.NEPAL_DIST_INDEX] += ', '
+        row[self.NEPAL_DIST_INDEX] += move_str
+        row[self.NEPAL_DIST_INDEX] = row[self.NEPAL_DIST_INDEX].strip(',. ')
+        row[self.WORLD_DIST_INDEX] = row[self.WORLD_DIST_INDEX].replace(move_str, ' ')
+        row[self.WORLD_DIST_INDEX] = row[self.WORLD_DIST_INDEX].strip(',. ')
+
+    def fix_nepal_distribution(self, sheet, sheet_id, row, i):
+        for nepal_location in  self.NEPAL_SEARCH_WORDS:
+            self.fix_nepal_location(nepal_location, row)
+        m = re.search(r'([WCE]+\s*,\s*[0-9]+\s*-\s*[0-9]+[,\.]?)', 
+                    row[self.WORLD_DIST_INDEX])
+        if m:
+            self.move_dist_data(row, m.group(1))
+        else:
+            m = re.search(r'([WCE]+\s*,\s*[0-9]+\s*[,\.]?)', 
+                    row[self.WORLD_DIST_INDEX])
+            if m:
+                self.move_dist_data(row, m.group(1))
+                
+        row[self.DONE_CODE_INDEX] += 'N'
+
+        values = [
+            [
+                row[self.WORLD_DIST_INDEX],
+                row[self.NEPAL_DIST_INDEX],
+                row[self.DONE_CODE_INDEX] # Cell values ...
+            ],
+            # Additional rows ...
+        ]
+        body = {
+            'values': values
+        }
+        sheet.values().update(spreadsheetId=sheet_id,
+                                range='I%d:K%d'%(i + 2, i + 2), 
+                                valueInputOption='RAW', body=body).execute()
+
+    def fix_nepal_location(self, nepal_loc, row):
+        m = re.search(r'(%s\s*,\s*[0-9]+[,\.]?)'%(nepal_loc), 
+                    row[self.WORLD_DIST_INDEX], re.I)
+        if m:
+            self.move_dist_data(row, m.group(1))
+
     def generate_latex_all_families(self):
         all_families_file = open('output/families.tex', 'w')
         for family in sorted(self.SPREADSHEET_DICT):

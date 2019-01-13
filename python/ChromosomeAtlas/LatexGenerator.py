@@ -19,6 +19,7 @@ class LatexGenerator:
         'Agavaceae'  : '1IadRjWtV_dEsMEgmNhAFY2-viQ0Ug7fUmSyuh4km2Uk',
         'Aizoiceae'  : '1j_GgOSlBSEuzgbUOFU5p9eS8iixgbG-iASnL7u0g718',  
         'Alangiaceae': '1Z9bLIm1q21cLek5cq6_dv9eAmCjrlLhekkWxxDPLmhE',
+        'Alismataceae': '1Vq-Z6vmNsLbQzu3ISfae3vmG3xMPg3HcAeH7dZsSA_8'
         }
     RANGE_NAME = 'Sheet1!A2:K'
     DONE_CODE_INDEX = 10
@@ -94,7 +95,8 @@ class LatexGenerator:
 
     def format_scientific_name(self, in_str):
         in_str = in_str.replace('\n', ' ')
-        m = re.match(r'\s*(\w+\.?\s+\w+)(.*)', in_str, re.I) # match first two words
+        print(in_str)
+        m = re.match(r'\s*(\w+\.?\s+[-\w]+)(.*)', in_str, re.I) # match first two words
         if m:
             out_str = '{\\em ' + m.group(1) + '}' + self.__format_sc_post_str(m.group(2))
             return out_str

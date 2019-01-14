@@ -24,7 +24,8 @@ class LatexGenerator:
         'Alangiaceae': '1Z9bLIm1q21cLek5cq6_dv9eAmCjrlLhekkWxxDPLmhE',
         'Alismataceae': '1Vq-Z6vmNsLbQzu3ISfae3vmG3xMPg3HcAeH7dZsSA_8',
         'Amaranthaceae': '1UpAvdWhzjti04YIXxa5_FWbbfCQC2Z3hVcryn-VA9xQ',
-        'Amaryllidaceae': '1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ'
+        'Amaryllidaceae': '1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ',
+        'Anacardiaceae': '1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0'
         }
     RANGE_NAME = 'Sheet1!A2:K'
     DONE_CODE_INDEX = 10
@@ -60,6 +61,8 @@ class LatexGenerator:
         self.output_latex_string_noreplace(out_str)
 
     def format_scientific_name_list(self, in_str):
+        in_str = in_str.replace('\n', ' ')
+        in_str = in_str.strip(' ,')
         str_lst = in_str.split(',')
         for i in range(0, len(str_lst)):
             str_lst[i] = self.format_scientific_name(str_lst[i])
@@ -103,11 +106,12 @@ class LatexGenerator:
 
     def get_genus(self, in_str):
         in_str = in_str.replace('\n', ' ')
-        in_str = in_str.strip(' ,.')
+        in_str = in_str.strip(' ,')
         return in_str.partition(' ')[0]
 
     def format_scientific_name(self, in_str):
         in_str = in_str.replace('\n', ' ')
+        in_str = in_str.strip(' ,')
         print(in_str)
         m = re.match(r'\s*(\w+\.?\s+[-\w]+)(.*)', in_str, re.I) # match first two words
         if m:

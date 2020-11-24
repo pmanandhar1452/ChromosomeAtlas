@@ -18,26 +18,31 @@ class LatexGenerator:
     # The ID and range of spreadsheets.
     SPREADSHEET_DICT = {
         'Acanthaceae': '1vbkdYUAIzmHhqRZCPx_wvImylWM_BqxcuhY2aIKZfuw', 
-        'Aceraceae'  : '1RqlxSLZs8Uhz2xyCFRq-541jyIqZRUejcGVX_WIPblw',
-        'Agavaceae'  : '1IadRjWtV_dEsMEgmNhAFY2-viQ0Ug7fUmSyuh4km2Uk',
-        'Aizoiceae'  : '1j_GgOSlBSEuzgbUOFU5p9eS8iixgbG-iASnL7u0g718',  
-        'Alangiaceae': '1Z9bLIm1q21cLek5cq6_dv9eAmCjrlLhekkWxxDPLmhE',
-        'Alismataceae': '1Vq-Z6vmNsLbQzu3ISfae3vmG3xMPg3HcAeH7dZsSA_8',
-        'Amaranthaceae': '1UpAvdWhzjti04YIXxa5_FWbbfCQC2Z3hVcryn-VA9xQ',
-        'Amaryllidaceae': '1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ',
-        'Anacardiaceae': '1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0'
+        # 'Aceraceae'  : '1RqlxSLZs8Uhz2xyCFRq-541jyIqZRUejcGVX_WIPblw',
+        # 'Agavaceae'  : '1IadRjWtV_dEsMEgmNhAFY2-viQ0Ug7fUmSyuh4km2Uk',
+        # 'Aizoiceae'  : '1j_GgOSlBSEuzgbUOFU5p9eS8iixgbG-iASnL7u0g718',  
+        # 'Alangiaceae': '1Z9bLIm1q21cLek5cq6_dv9eAmCjrlLhekkWxxDPLmhE',
+        # 'Alismataceae': '1Vq-Z6vmNsLbQzu3ISfae3vmG3xMPg3HcAeH7dZsSA_8',
+        # 'Amaranthaceae': '1UpAvdWhzjti04YIXxa5_FWbbfCQC2Z3hVcryn-VA9xQ',
+        # 'Amaryllidaceae': '1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ',
+        # 'Anacardiaceae': '1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0'
         }
-    RANGE_NAME = 'Sheet1!A2:K'
-    DONE_CODE_INDEX = 10
-    WORLD_DIST_INDEX = 8
-    NEPAL_DIST_INDEX = 9
-    CHR_NUM_INDEX = 4
-    CITATION_INDEX = 5
-    SPECIES_INDEX = 0
+    RANGE_NAME = 'Sheet1!A2:L'
+    
+    DONE_CODE_INDEX = 0
+    SPECIES_INDEX = 1
+    NEPAL_NAMES_INDEX = 2
+    ENGLISH_NAMES_INDEX = 4
+    USE_CODE_INDEX = 7
+    CHR_NUM_INDEX = 9
+    CITATION_INDEX = 10
+    NEPAL_DIST_INDEX = 11
+
+    
     NEPAL_SEARCH_WORDS = ['Godawari', 'Patan', 'Kuleswor']
 
     def normalize_row(self, row):
-        TOTAL_COLS = 11
+        TOTAL_COLS = 12
         for i in range(len(row), TOTAL_COLS):
             row.append('')
         return row
@@ -105,6 +110,7 @@ class LatexGenerator:
         return in_str
 
     def get_genus(self, in_str):
+        print(f'get_genus({in_str})')
         in_str = in_str.replace('\n', ' ')
         in_str = in_str.strip(' ,')
         return in_str.partition(' ')[0]
@@ -112,13 +118,13 @@ class LatexGenerator:
     def format_scientific_name(self, in_str):
         in_str = in_str.replace('\n', ' ')
         in_str = in_str.strip(' ,')
-        print(in_str)
+        print(f'format_scientific_name({in_str})')
         m = re.match(r'\s*(\w+\.?\s+[-\w]+)(.*)', in_str, re.I) # match first two words
         if m:
             out_str = '{\\em ' + m.group(1) + '}' + self.__format_sc_post_str(m.group(2))
             return out_str
         else:
-            raise Exception('Scientific name does not seem to be in correct format')
+            raise Exception(f'Scientific name {in_str} does not seem to be in correct format')
 
     def generate_latex_row_chr_num(self, row):
         # output chromosome numbers and citation as a separate row
@@ -128,33 +134,26 @@ class LatexGenerator:
         self.output_citations(citations + '\n\n')
 
     def generate_latex_row(self, row):
+        print(f'generate_latex_row({row})')
         if self.is_heading_row(row):
             self.output_latex_string(
                 '\\section{' + self.format_scientific_name(row[self.SPECIES_INDEX]) + '}\n')
-            if row[3] != '':
-                self.output_latex_string(
-                    '\\noindent \\textbf{Synonyms}: ' + 
-                                    self.format_scientific_name_list(row[3]) + '\n\n')
-            if row[1] != '':
+            if row[self.NEPAL_NAMES_INDEX] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Common name(s) in use in Nepal}: \\begin{hindi} ' \
                     + '{\large ' \
-                    + row[1] + '} \\end{hindi}\n\n')
-            if row[2] != '':
+                    + (row[self.NEPAL_NAMES_INDEX]).lower() + '} \\end{hindi}\n\n')
+            if row[self.ENGLISH_NAMES_INDEX] != '':
                 self.output_latex_string(
-                    '\\noindent \\textbf{Common name(s) in English language}: ' \
-                    + string.capwords(row[2], " ") + '\n\n')
-            if row[7] != '':
+                    '\\noindent \\textbf{Common name(s) in English}: ' \
+                    + string.capwords(row[self.ENGLISH_NAMES_INDEX], " ") + '\n\n')
+            if row[self.USE_CODE_INDEX] != '':
                 self.output_latex_string(
-                    '\\noindent \\textbf{Uses}: ' + row[7] + '\n\n')
+                    '\\noindent \\textbf{Uses}: ' + row[self.USE_CODE_INDEX] + '\n\n')
             if row[self.NEPAL_DIST_INDEX] != '':
                 self.output_latex_string(
                     '\\noindent \\textbf{Distribution in Nepal/Local reports}: ' \
                     + self.add_msl(row[self.NEPAL_DIST_INDEX]) + '\n\n')
-            if row[self.WORLD_DIST_INDEX] != '':
-                self.output_latex_string(
-                    '\\noindent \\textbf{World Distribution}: ' \
-                    + row[self.WORLD_DIST_INDEX] + '\n\n\\vspace{1em}\n\n')
             
         # output chromosome numbers and citation as a separate row
         self.generate_latex_row_chr_num(row)
@@ -169,7 +168,7 @@ class LatexGenerator:
         store = file.Storage('token.json')
         creds = store.get()
         if not creds or creds.invalid:
-            flow = client.flow_from_clientsecrets('credentials.json', self.SCOPES)
+            flow = client.flow_from_clientsecrets('client_secret_563563514748-486lji2ouvg2svb016j2gbe65135ks9r.apps.googleusercontent.com.json', self.SCOPES)
             creds = tools.run_flow(flow, store)
         service = build('sheets', 'v4', http=creds.authorize(Http()))
 
@@ -196,8 +195,6 @@ class LatexGenerator:
                         self.num_genus_in_fam += 1
                         self.current_genus = row_genus
                     done_code = row[self.DONE_CODE_INDEX]
-                    if done_code.find('N') == -1:
-                        self.fix_nepal_distribution(sheet, sheet_id, row, i)
                 self.generate_latex_row(row)
             self.latex_file.close()
     
@@ -206,44 +203,6 @@ class LatexGenerator:
             row[self.NEPAL_DIST_INDEX] += ', '
         row[self.NEPAL_DIST_INDEX] += move_str
         row[self.NEPAL_DIST_INDEX] = row[self.NEPAL_DIST_INDEX].strip(',. ')
-        row[self.WORLD_DIST_INDEX] = row[self.WORLD_DIST_INDEX].replace(move_str, ' ')
-        row[self.WORLD_DIST_INDEX] = row[self.WORLD_DIST_INDEX].strip(',. ')
-
-    def fix_nepal_distribution(self, sheet, sheet_id, row, i):
-        for nepal_location in  self.NEPAL_SEARCH_WORDS:
-            self.fix_nepal_location(nepal_location, row)
-        m = re.search(r'([WCE]+\s*,\s*[0-9]+\s*-\s*[0-9]+[,\.]?)', 
-                    row[self.WORLD_DIST_INDEX])
-        if m:
-            self.move_dist_data(row, m.group(1))
-        else:
-            m = re.search(r'([WCE]+\s*,\s*[0-9]+\s*[,\.]?)', 
-                    row[self.WORLD_DIST_INDEX])
-            if m:
-                self.move_dist_data(row, m.group(1))
-                
-        row[self.DONE_CODE_INDEX] += 'N'
-
-        values = [
-            [
-                row[self.WORLD_DIST_INDEX],
-                row[self.NEPAL_DIST_INDEX],
-                row[self.DONE_CODE_INDEX] # Cell values ...
-            ],
-            # Additional rows ...
-        ]
-        body = {
-            'values': values
-        }
-        sheet.values().update(spreadsheetId=sheet_id,
-                                range='I%d:K%d'%(i + 2, i + 2), 
-                                valueInputOption='RAW', body=body).execute()
-
-    def fix_nepal_location(self, nepal_loc, row):
-        m = re.search(r'(%s\s*,\s*[0-9]+[,\.]?)'%(nepal_loc), 
-                    row[self.WORLD_DIST_INDEX], re.I)
-        if m:
-            self.move_dist_data(row, m.group(1))
 
     def generate_latex_all_families(self):
         all_families_file = open('output/families.tex', 'w')

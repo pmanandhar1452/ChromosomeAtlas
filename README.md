@@ -4,7 +4,8 @@ Chromosome Atlas of Nepal -- Database and Book
 # Python scripts to compile book
 
 ## Dependencies
-``pip install google-api-python-client``
+``pip3 install google-api-python-client``
+``pip3 install oauth2client``
 
 ## 2020-Nov-23
 - Working on reviving scripts and testing

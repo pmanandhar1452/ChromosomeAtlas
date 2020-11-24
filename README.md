@@ -1,6 +1,10 @@
 # ChromosomeAtlas
 Chromosome Atlas of Nepal -- Database and Book
 
+# Python scripts to compile book
+## 2020-Nov-23
+- Working on reviving scripts and testing
+
 # Meeting Notes
 ## 2018-Sep-19
 

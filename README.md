@@ -8,6 +8,9 @@ Chromosome Atlas of Nepal -- Database and Book
 
 ``pip3 install oauth2client``
 
+## How to Run
+``python3 -m ChromosomeAtlas.LatexGenerator``
+
 ## 2020-Nov-23
 - Working on reviving scripts and testing
 

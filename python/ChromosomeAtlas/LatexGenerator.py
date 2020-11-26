@@ -270,7 +270,7 @@ class LatexGenerator:
             family_count_file = open('output/' + family + '.count.tex', 'w')
     
             if self.num_genus_in_fam == 1:
-                genus_particle = 'is a'
+                genus_particle = 'is a single'
                 genus_word = 'genus'
                 
             else:

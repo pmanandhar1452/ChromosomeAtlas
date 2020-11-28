@@ -31,7 +31,9 @@ class LatexGenerator:
         'Alismataceae': '1Vq-Z6vmNsLbQzu3ISfae3vmG3xMPg3HcAeH7dZsSA_8',
         'Amaranthaceae': '1UpAvdWhzjti04YIXxa5_FWbbfCQC2Z3hVcryn-VA9xQ',
         'Amaryllidaceae': '1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ',
-        'Anacardiaceae': '1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0'
+        'Anacardiaceae': '1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0',
+        'Annonaceae': '1bN4I6az_ISWVTPD3qEu6Xxm6m07dLhNonnWgTuiaKko',
+        'Apiaceae': '1oI_jKwBDmhcRRuQey3YNAEDDKgQbGY6-qStlGN_WkcI'
         }
     RANGE_NAME = 'Sheet1!A2:L'
     

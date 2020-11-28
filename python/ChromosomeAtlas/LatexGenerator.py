@@ -33,7 +33,9 @@ class LatexGenerator:
         'Amaryllidaceae': '1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ',
         'Anacardiaceae': '1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0',
         'Annonaceae': '1bN4I6az_ISWVTPD3qEu6Xxm6m07dLhNonnWgTuiaKko',
-        'Apiaceae': '1oI_jKwBDmhcRRuQey3YNAEDDKgQbGY6-qStlGN_WkcI'
+        'Apiaceae': '1oI_jKwBDmhcRRuQey3YNAEDDKgQbGY6-qStlGN_WkcI',
+        'Apocynaceae': '1PHe5lXT6eR6KkMnb0iAXo1_HjQJD8k2yiRashA3uMX8',
+        'Aponogetonaceae': '1-UZdVUrah1ZgOXHyUKz3iBvKCgPRVzalI2NxHYlbGdM'	
         }
     RANGE_NAME = 'Sheet1!A2:L'
     
@@ -272,17 +274,22 @@ class LatexGenerator:
             family_count_file = open('output/' + family + '.count.tex', 'w')
     
             if self.num_genus_in_fam == 1:
-                genus_particle = 'is a single'
+                genus_article = 'is a single'
                 genus_word = 'genus'
                 
             else:
-                genus_particle = f'are {self.num_genus_in_fam}'
+                genus_article = f'are {self.num_genus_in_fam}'
                 genus_word = 'genera'
 
+            if self.num_species_in_fam == 1:
+                fam_article = 'a single'
+            else:
+                fam_article = f'{self.num_species_in_fam}'
+
             family_count_file.write(
-                'There %s %s and %d species reported with chromosome counts  '
+                'There %s %s and %s species reported with chromosome counts  '
                 'in Nepal in this family.\\vspace{-5mm}'%
-                    (genus_particle, genus_word, self.num_species_in_fam)
+                    (genus_article, genus_word, fam_article)
             )
             family_count_file.close()
         all_families_file.close()

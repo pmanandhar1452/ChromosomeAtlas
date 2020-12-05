@@ -5,6 +5,7 @@ from httplib2 import Http
 from oauth2client import file, client, tools
 import string
 from enum import Enum
+import time
 
 class CapStyle(Enum):
     AS_IS     = 0
@@ -35,7 +36,9 @@ class LatexGenerator:
         'Annonaceae': '1bN4I6az_ISWVTPD3qEu6Xxm6m07dLhNonnWgTuiaKko',
         'Apiaceae': '1oI_jKwBDmhcRRuQey3YNAEDDKgQbGY6-qStlGN_WkcI',
         'Apocynaceae': '1PHe5lXT6eR6KkMnb0iAXo1_HjQJD8k2yiRashA3uMX8',
-        'Aponogetonaceae': '1-UZdVUrah1ZgOXHyUKz3iBvKCgPRVzalI2NxHYlbGdM'	
+        'Aponogetonaceae': '1-UZdVUrah1ZgOXHyUKz3iBvKCgPRVzalI2NxHYlbGdM',
+        'Aquifoliaceae': '1TkEFy28X1iCL0fbb4JuvNeFdUjyeG4wGhcXDfHj8J5Q',
+        'Aracaceae': '1JwrLcL5oJQQJFPxXY-y-rNOrqrLic1Zb7iGRslLeVf4'
         }
     RANGE_NAME = 'Sheet1!A2:L'
     
@@ -288,10 +291,11 @@ class LatexGenerator:
 
             family_count_file.write(
                 'There %s %s and %s species reported with chromosome counts  '
-                'in Nepal in this family.\\vspace{-5mm}'%
+                'of plants found in Nepal in this family.\\vspace{-5mm}'%
                     (genus_article, genus_word, fam_article)
             )
             family_count_file.close()
+            time.sleep(0.1)
         all_families_file.close()
             
 

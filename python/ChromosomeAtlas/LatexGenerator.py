@@ -22,7 +22,8 @@ class LatexGenerator:
     # If modifying these scopes, delete the file token.json.
     SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
 
-    # The ID and range of spreadsheets.
+    # The ID and range of spreadsheets.     
+
     SPREADSHEET_DICT = {
         'Acanthaceae': '1vbkdYUAIzmHhqRZCPx_wvImylWM_BqxcuhY2aIKZfuw', 
         'Aceraceae'  : '1RqlxSLZs8Uhz2xyCFRq-541jyIqZRUejcGVX_WIPblw',
@@ -38,8 +39,30 @@ class LatexGenerator:
         'Apocynaceae': '1PHe5lXT6eR6KkMnb0iAXo1_HjQJD8k2yiRashA3uMX8',
         'Aponogetonaceae': '1-UZdVUrah1ZgOXHyUKz3iBvKCgPRVzalI2NxHYlbGdM',
         'Aquifoliaceae': '1TkEFy28X1iCL0fbb4JuvNeFdUjyeG4wGhcXDfHj8J5Q',
-        'Aracaceae': '1JwrLcL5oJQQJFPxXY-y-rNOrqrLic1Zb7iGRslLeVf4'
+        'Aracaceae': '1JwrLcL5oJQQJFPxXY-y-rNOrqrLic1Zb7iGRslLeVf4',
+        'Araceae': '1bwrFv_iPJ89UGx115ZoRSqjGRY_m1_p1PifbHRiuPtA',
+        'Araliaceae': '18eVtHUVzH9_X-uBAgCUoDVOeLlEHOmjJdYNzxZEvIUQ',
+        'Aristrolochiaceae': '1eWGC74p0g-hw9ctUqxYaJExlsUUlS9w_TdMYG7aPfR4',
+        'Asclepiadaceae': '1It_JAnjSrSl6qDXckqy67JldjgzqXndA7JUZu-h3Rc0',
+        'Asteraceae': '1R26HJFoGIvVyQDebvN0T_lUZLxP07YHQtl-yt1cinJI',
+        'Balsaminaceae': '1swLGYE7r6xcO_2RBXC8Bk7-urWk4CL9c5CmAwlrKpZE',
+        'Basellaceae': '1B-TLV6aKrp3eyqSvdHuG6z-YoHjvMI1JrC-aRji76ao',
+        'Begoniaceae': '1v-X3D708YPf5mcwaNMhQ6GOazG2UjWKJfZsUSic2omQ',
+        'Berberidaceae':'1WwCvMDnWxNF58cgKR-plJmF_fgnxidTC_XSmBb4UFfA',
+        'Betulaceae':'12dpTJwd0ymeb2ssCFB9g1IzkiHTdhZZ-wMtX0rgmYI0',
+        'Bignoniaceae':'1zzZ7XG4Alxwf5RX6mNPT3K6gTGM5xegF2xhidmsn6Bo',
+        'Bombacaceae':'1ICUvGYuTzUEwFGfzVpqX2l6dZ22GRePWMLEIIIuU4nI',
+        'Boraginaceae':'1ICLaRsV4LUvwSUQLSwbrJQSgrDiGa8-20aFujs9UogI',
+        'Brassicaceae':'1TKt9hILyc7Iapfp9T_jQo0whcPbFffQySTqrN1qspm0',
+        'Bromelliaceae':'1_Vu4eUkaknzNT8C4d7zVKJCVE_qdljOPP8gkdHoaZH4',
+        'Burseraceae':'1zVgTT8fOYECUhUN0tqmKgIgUv5-_C95CYQBWkAfCgtU',
+        'Callistricaceae':'11vu_Od9dwv9yDFPs4TI4NuUhn2iZu86Not1KpbMD0Ck',
+        'Campanulaceae':'1_bS45r9lEXeN9GkMT8s0C6byOjoM9VNiausNUUlKqsg',
+        'Cannabaceae':'1EUf_M38fr2Fa6J20OqS1jQqtHHgcUnLm7AvgJQW3ghA',
+        'Caprifoliaceae':'1rrH8RnMypK7Rgyg0kcrSOiu0kojkBfycfFNHDn32J7g',
+        'Caricaceae':'1jfuUUy74rPzWm4Zl9E7DzFghSF2PzraMw0vMPDrM1js',
         }
+
     RANGE_NAME = 'Sheet1!A2:L'
     
     DONE_CODE_INDEX = 0

@@ -141,7 +141,6 @@ class LatexGenerator:
         "Vitaceae+": "1rmsV6Z63_z_o40ZlDMY2XUykGe_Jbr9OX73bkS5GwUg",
         "Zingiberaceae+": "1fioMKPZvf5yTzCltrJgI4M1nRHQ1MzktFuyeR-nltcI",
         "Iridaceae+": "1OmMboJvHSGEDrVB3FeNqhF81vPjQ6FFKMlJ9T52UX5c",
-        "Stachyuraceae+": "1jDFPIbDfKFkbZM0nWmdHpEhTtugSvzJa77fOSoYQV-w",
         "Symplocaceae‌‌+": "1MWS2_f1BKz5yW2256DdYoGHlUYJ61io-4qdOfieEMq0",
         "Sterculiaceae+": "1ZLu75Mgdsfs8nJnMnj0uMVW_ecK83OZN1dz8VW6hYXQ",
         "Sphenucleaceae‌+": "10cYW2tK38A0PRUIbqjRECn_ejGuWMns-0DUkLz3mogk",
@@ -181,17 +180,14 @@ class LatexGenerator:
         "Fagaceae+": "11XO-FhNLzfrJ64Xgen0rQME_J_bz_BEM-kjt3dHPJqE",
         "Gentianaceae+": "1WXEBMGmEdkKR99BHUmnND-1vXThBg8vPKqUVmRrjqNU",
         "Flacourtiaceae+": "1YOT_kQUNtTxGuGt4T2vogtS0zo8VkJakwco-2bqmquM",
-        "Geraniaceaexxx": "1xVpheOyhp0jWctMJ2-C03SWHf79VKS-6pZ7jOM5XvmA",
         "Gesnereaceae+": "1Z2On-7lOPadRVv1DhvputENQ9ttgFZTJfuP8r8OY05c",
         "Guttiferae+": "1BLSqfka9i3ArcdqMNrpD36z3qkF1Hb3ozKavenGWHfA",
-        "Gesneriaceae that are represented in Nepalxx.": "1QjafevRDURnW2pqtD_sNzErvrhLfOU0wgZZ8fCQLEts",
         "Haloragaceae+": "1vESINRAcTLxM8OQx14Ti0_27i9wG4_CcmWXUDIbjiVs",
         "Hippocastenaceae+": "1ogALHCYp0Nc-kf5_PLIbUzg4KLBKTzjSKPhSEcJUUyY",
         "Hippuridaceae+": "1ITu4EnwbilKhgDSlPiWuMEXL33PA8sg-wDc5rP5mF1w",
-        "Hemionitidaceae (Pteridophyte family)": "1F7HAYr1uM1E3P9yfeSUmZNiDAPgk0qQ3J95nfC0eeSo",
         "Hydrangeaceae+": "17qCC8sjbqew1FM9wI4EgXi8yHRAeEOeBVee5BcT5uSI",
-        "Hydrocharitaceae (Tape Grass family)+": "1ZsjVipwX6DWphJVRPMaFXGyRMPqSCHSBOHujPOBb6EU",
-        "Juncaceae (RUSH FAMILY )+": "1nUbL4n26pucD-NeEy-iuL6BZ_F_RQdO1qp0svQT0618",
+        "Hydrocharitaceae": "1ZsjVipwX6DWphJVRPMaFXGyRMPqSCHSBOHujPOBb6EU",
+        "Juncaceae+": "1nUbL4n26pucD-NeEy-iuL6BZ_F_RQdO1qp0svQT0618",
         "Juglandaceae+": "1apv4FYDKml-trgxt66a08WFl89YbpmMFWh-bC6Oyu94",
         "Linaceae+": "1X9glN6PmT6xC_oTnxAEC3dwXDPvxWQjTHpRKw1_UjUw",
         "Juncaginaceae+ ": "1NM3dmImvPx87ugzSthqJ5s4uhUtaP8ya_95EbJn7B0E",
@@ -231,7 +227,6 @@ class LatexGenerator:
         "Simaroubaceae+": "1ZuemiyfWxwbzhy5kJcyY_x3hptyhxEoHmRiI8o7qCcg",
         "Stachyuraceae+": "1Sch_FW5BcVDa80n8b9tZsjJ1Ky1zE6zQHUQWNHD06q4",
         "Tamaricaceae+": "1XzFevAaxT2jvSxxIDmrBSt9NO-kzWTRjJCBfKRyvPZ4",
-        "Nymphaeceae=duplicate": "1ewyvF5m6xLtax1mjNSQ70Cpu29IsIwyriPzZ28CXo2Y"
     }
 
     RANGE_NAME = 'Sheet1!A2:L'

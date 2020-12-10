@@ -95,7 +95,7 @@ class LatexGenerator:
         "Amaryllidaceae": ["1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ", False],
         "Nymphaeaceae": ["1xvLM34YgiU2jw-zxdbfEm9r3egZ-fPk9Of2rAxUip1k", False],
         "Anacardiaceae": ["1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0", False],
-        "Violaceae": ["1ImPm9KK0yCDofc-k8dPkWn2Sk02YrmBDj5S9ZshRZEw", True],
+        "Violaceae": ["1ImPm9KK0yCDofc-k8dPkWn2Sk02YrmBDj5S9ZshRZEw", False],
         "Combretaceae": ["1omT4FKB7wyZ0h6KF-Tc1RtxPi2qBlmpn7hBFLM88IfI", False],
         "Apiaceae": ["1oI_jKwBDmhcRRuQey3YNAEDDKgQbGY6-qStlGN_WkcI", False],
         "Amaranthaceae": ["1UpAvdWhzjti04YIXxa5_FWbbfCQC2Z3hVcryn-VA9xQ", False],
@@ -126,7 +126,7 @@ class LatexGenerator:
         "Rosaceae": ["1b1oiHVok83hrr3lRdm5ZIPkl-a3V8l32NbU_ZrW1Lrk", False],
         "Primulaceae": ["1JBUT0Dv4uZUDHhUQ-a506YsoNECo4F_CONMncL3q5GI", False],
         "Crassulaceae": ["1inRLht4bZKpOoh6vcRp9D0jW8Ay1cm-Ez-arpHDtc3o", False],
-        "Zygophyllaceae": ["1in1Si3aOLMbXlR1PMTV2Dx_6dEiNN54GG2uR5itkMws", True],
+        "Zygophyllaceae": ["1in1Si3aOLMbXlR1PMTV2Dx_6dEiNN54GG2uR5itkMws", False],
         "Fumariaceae": ["1sreIkDQdI5qje3xosxS4l9Kn9zyBcdEdjHx5T5HX8uQ", False],
         "Liliaceae": ["1OfUprilynnynmRt1OHGRVcUZu6KQ5YAUg0Wer1nrPLQ", False],
         "Convolvulaceae": ["1K6thfNrWFKgduaVnZfIIS6jWVKEOxiFYQaXkPIJt3-E", False],
@@ -138,8 +138,8 @@ class LatexGenerator:
         "Solanaceae": ["1IRVq5z9tcaHjhrUaLO4RxyL4W1kw6jJqC7t4keVnki0", False],
         "Ulmaceae": ["1CVIMRZDRSdHxzECL78jIHyWZzQ3KQ2qqAj_bL9YpDjs", False],
         "Valerianaceae": ["14fuPJiT7I5NuteLHHIUGsYVv4PZnoTg2dnTrDNfA3Wo", False],
-        "Vitaceae": ["1rmsV6Z63_z_o40ZlDMY2XUykGe_Jbr9OX73bkS5GwUg", True],
-        "Zingiberaceae": ["1fioMKPZvf5yTzCltrJgI4M1nRHQ1MzktFuyeR-nltcI", True],
+        "Vitaceae": ["1rmsV6Z63_z_o40ZlDMY2XUykGe_Jbr9OX73bkS5GwUg", False],
+        "Zingiberaceae": ["1fioMKPZvf5yTzCltrJgI4M1nRHQ1MzktFuyeR-nltcI", False],
         "Iridaceae": ["1OmMboJvHSGEDrVB3FeNqhF81vPjQ6FFKMlJ9T52UX5c", False],
         "Symplocaceae": ["1MWS2_f1BKz5yW2256DdYoGHlUYJ61io-4qdOfieEMq0", False],
         "Sterculiaceae": ["1ZLu75Mgdsfs8nJnMnj0uMVW_ecK83OZN1dz8VW6hYXQ", False],
@@ -467,40 +467,40 @@ class LatexGenerator:
             self.num_genus_in_fam = 0
             self.num_species_in_fam = 0
             
+            all_families_file.write('\\include{' + family + '}\n')
+            
             if need_processing:
                 self.generate_latex(family)
-            all_families_file.write('\\include{' + family + '}\n')
-            family_tex_file = open('output/' + family + '.tex', 'w')
-            family_tex_file.write('\\chapter{' + family + '}\n\n' +
-                '\\input{' + family + '.count.tex}\n\n' +   
-                '\\input{' + family + '.table.tex}\n\n' + 
-                '\\vspace{5mm}'
-                                '\\bibliographystyle{plainnat}\n' + 
-                                '\\bibliography{Bibliography}\n')
-            family_tex_file.close()
-            family_count_file = open('output/' + family + '.count.tex', 'w')
-    
-            if self.num_genus_in_fam == 1:
-                genus_article = 'is a single'
-                genus_word = 'genus'
-                
-            else:
-                genus_article = f'are {self.num_genus_in_fam}'
-                genus_word = 'genera'
+                family_tex_file = open('output/' + family + '.tex', 'w')
+                family_tex_file.write('\\chapter{' + family + '}\n\n' +
+                    '\\input{' + family + '.count.tex}\n\n' +   
+                    '\\input{' + family + '.table.tex}\n\n' + 
+                    '\\vspace{5mm}'
+                                    '\\bibliographystyle{plainnat}\n' + 
+                                    '\\bibliography{Bibliography}\n')
+                family_tex_file.close()
+                family_count_file = open('output/' + family + '.count.tex', 'w')
+        
+                if self.num_genus_in_fam == 1:
+                    genus_article = 'is a single'
+                    genus_word = 'genus'
+                    
+                else:
+                    genus_article = f'are {self.num_genus_in_fam}'
+                    genus_word = 'genera'
 
-            if self.num_species_in_fam == 1:
-                fam_article = 'a single'
-            else:
-                fam_article = f'{self.num_species_in_fam}'
+                if self.num_species_in_fam == 1:
+                    fam_article = 'a single'
+                else:
+                    fam_article = f'{self.num_species_in_fam}'
 
-            family_count_file.write(
-                'There %s %s and %s species reported with chromosome counts  '
-                'of plants found in Nepal in this family.\\vspace{-5mm}'%
-                    (genus_article, genus_word, fam_article)
-            )
-            family_count_file.close()
-            if need_processing:
-                time.sleep(2)
+                family_count_file.write(
+                    'There %s %s and %s species reported with chromosome counts  '
+                    'of plants found in Nepal in this family.\\vspace{-5mm}'%
+                        (genus_article, genus_word, fam_article)
+                )
+                family_count_file.close()
+                time.sleep(10)
         all_families_file.close()
             
 

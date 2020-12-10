@@ -73,7 +73,7 @@ class LatexGenerator:
         "Capparaceae": "1ViObgOHXYTKCHHf_yRa84UxDK34dRiiZrpZr4CgWEZc",
         "Cannaceae+‌": "1_plRcrI3NLxZldyMMYfI6WOzVkj541R4Lu0_dbEtjKc",
         "Callistricaceae": "11vu_Od9dwv9yDFPs4TI4NuUhn2iZu86Not1KpbMD0Ck",
-        "Burseraceae +‌": "1zVgTT8fOYECUhUN0tqmKgIgUv5-_C95CYQBWkAfCgtU",
+        "Burseraceae": "1zVgTT8fOYECUhUN0tqmKgIgUv5-_C95CYQBWkAfCgtU",
         "Boraginaceae‌": "1ICLaRsV4LUvwSUQLSwbrJQSgrDiGa8-20aFujs9UogI",
         "Bromelliaceae": "1_Vu4eUkaknzNT8C4d7zVKJCVE_qdljOPP8gkdHoaZH4",
         "Brassicaceae": "1TKt9hILyc7Iapfp9T_jQo0whcPbFffQySTqrN1qspm0",
@@ -89,7 +89,7 @@ class LatexGenerator:
         "Araliaceae": "18eVtHUVzH9_X-uBAgCUoDVOeLlEHOmjJdYNzxZEvIUQ",
         "Araceae": "1bwrFv_iPJ89UGx115ZoRSqjGRY_m1_p1PifbHRiuPtA",
         "Aracaceae": "1JwrLcL5oJQQJFPxXY-y-rNOrqrLic1Zb7iGRslLeVf4",
-        "Verbenaceae+‌‌‌‍‍‍‌": "1iMwW2H5y1yEPp6TfjiyxcUwbZP6MInqPbeYym8hg1aI",
+        "Verbenaceae‌‌‌‍‍‍‌": "1iMwW2H5y1yEPp6TfjiyxcUwbZP6MInqPbeYym8hg1aI",
         "Chenopodiaceae": "1qkqO5DL8FM4I9dZuJcMF89X4ZXmuU6wi73Y2K3vx3xQ",
         "Bignoniaceae": "1zzZ7XG4Alxwf5RX6mNPT3K6gTGM5xegF2xhidmsn6Bo",
         "Amaryllidaceae": "1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ",
@@ -229,20 +229,20 @@ class LatexGenerator:
         "Tamaricaceae": "1XzFevAaxT2jvSxxIDmrBSt9NO-kzWTRjJCBfKRyvPZ4",
     }
 
+    RANGE_ALL  = 'Sheet1!A1:R'
     RANGE_NAME = 'Sheet1!A2:L'
-    
-    DONE_CODE_INDEX = 0
-    SPECIES_INDEX = 1
-    NEPAL_NAMES_INDEX = 2
-    NEPAL_NAMES_BIB_INDEX = 3
-    ENGLISH_NAMES_INDEX = 4
-    ENGLISH_NAMES_BIB_INDEX = 5
-    USE_CODE_INDEX = 6
-    USE_CODE_BIB_INDEX = 7
-    CHR_NUM_INDEX = 8
-    CITATION_INDEX = 9
-    NEPAL_DIST_INDEX = 10
-    NEPAL_DIST_BIB_INDEX = 11
+
+    SPECIES_INDEX = 0
+    NEPAL_NAMES_INDEX = 1
+    NEPAL_NAMES_BIB_INDEX = 2
+    ENGLISH_NAMES_INDEX = 3
+    ENGLISH_NAMES_BIB_INDEX = 4
+    USE_CODE_INDEX = 5
+    USE_CODE_BIB_INDEX = 6
+    CHR_NUM_INDEX = 7
+    CITATION_INDEX = 8
+    NEPAL_DIST_INDEX = 9
+    NEPAL_DIST_BIB_INDEX = 10
     
     NEPAL_SEARCH_WORDS = ['Godawari', 'Patan', 'Kuleswor']
 
@@ -405,6 +405,7 @@ class LatexGenerator:
        return re.sub(r'([0-9]+)', r'\1 msl', in_str)
 
     def generate_latex(self, family_name):
+        print(f'generate_latex({family_name})')
         # The file token.json stores the user's access and refresh tokens, and is
         # created automatically when the authorization flow completes for the first
         # time.
@@ -418,29 +419,37 @@ class LatexGenerator:
         # Call the Sheets API
         sheet = service.spreadsheets()
         sheet_id = self.SPREADSHEET_DICT[family_name]
+        # result = sheet.values().get(spreadsheetId=sheet_id,
+        #                             range=self.RANGE_NAME).execute()
         result = sheet.values().get(spreadsheetId=sheet_id,
-                                    range=self.RANGE_NAME).execute()
-        values = result.get('values', [])
+                                    range=self.RANGE_ALL).execute()
+                                    
+        val_all = result.get('values', [])
 
-        if not values:
-            print('No data found.')
+        print(val_all[0])
+        if (val_all[0][0] != 'Taxon'):
+            # remove first row and column from result
+            values = [val_all[i][1:] for i in range(1, len(val_all))]
         else:
-            self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
-            for i in range(0, len(values)):
-                row = values[i]
-                if (len(row) == 0): # skip if empty row
-                    continue
-                row = self.normalize_row(row)
-                if (self.is_heading_row(row)):
-                    self.num_species_in_fam += 1
-                    row_genus = self.get_genus(row[self.SPECIES_INDEX])
-                    if row_genus != self.current_genus:
-                        self.num_genus_in_fam += 1
-                        self.current_genus = row_genus
-                    done_code = row[self.DONE_CODE_INDEX]
-                self.generate_latex_row(row)
-            self.latex_file.close()
-    
+            # remove first row and 9th column from result
+            values = [val_all[i][:8] + val_all[i][10:11] for i in range(1, len(val_all))]
+        print(values[0])
+
+        self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
+        for i in range(0, len(values)):
+            row = values[i]
+            if (len(row) == 0): # skip if empty row
+                continue
+            row = self.normalize_row(row)
+            if (self.is_heading_row(row)):
+                self.num_species_in_fam += 1
+                row_genus = self.get_genus(row[self.SPECIES_INDEX])
+                if row_genus != self.current_genus:
+                    self.num_genus_in_fam += 1
+                    self.current_genus = row_genus
+            self.generate_latex_row(row)
+        self.latex_file.close()
+
     def move_dist_data(self, row, move_str):
         if not (row[self.NEPAL_DIST_INDEX].isspace()):
             row[self.NEPAL_DIST_INDEX] += ', '

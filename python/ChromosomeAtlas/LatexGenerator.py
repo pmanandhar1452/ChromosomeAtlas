@@ -341,6 +341,8 @@ class LatexGenerator:
         # output chromosome numbers and citation as a separate row
         chr_num = row[self.CHR_NUM_INDEX].strip(',. ')
         citations = row[self.CITATION_INDEX].strip(',. ')
+        if len(chr_num) == 0:
+            chr_num = 'Missing-Data'
         self.output_latex_string('\\begin{hangparas}{0.5cm}{1}\\noindent \\textbf{$' + chr_num + '$} ')
         self.output_citations_p(citations)
         self.output_latex_string('\\end{hangparas}\n')

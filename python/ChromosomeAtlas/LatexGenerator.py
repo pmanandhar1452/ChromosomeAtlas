@@ -498,7 +498,8 @@ class LatexGenerator:
                     (genus_article, genus_word, fam_article)
             )
             family_count_file.close()
-            time.sleep(5)
+            if need_processing:
+                time.sleep(2)
         all_families_file.close()
             
 

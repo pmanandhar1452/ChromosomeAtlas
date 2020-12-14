@@ -64,15 +64,15 @@ class LatexGenerator:
     #     }
 
     SPREADSHEET_DICT = {
-        "Caryophyllaceae": ["1ZteEsKR5j3DUBfd05XMr0VDpJHusK252muqecmIGRTc", False],
-        "Caricaceae": ["1jfuUUy74rPzWm4Zl9E7DzFghSF2PzraMw0vMPDrM1js", False],
-        "Caprifoliaceae": ["1rrH8RnMypK7Rgyg0kcrSOiu0kojkBfycfFNHDn32J7g", False],
-        "Cannabaceae": ["1EUf_M38fr2Fa6J20OqS1jQqtHHgcUnLm7AvgJQW3ghA", False],
-        "Campanulaceae": ["1_bS45r9lEXeN9GkMT8s0C6byOjoM9VNiausNUUlKqsg", False],
+        "Caryophyllaceae": ["1ZteEsKR5j3DUBfd05XMr0VDpJHusK252muqecmIGRTc", True],
+        "Caricaceae": ["1jfuUUy74rPzWm4Zl9E7DzFghSF2PzraMw0vMPDrM1js", True],
+        "Caprifoliaceae": ["1rrH8RnMypK7Rgyg0kcrSOiu0kojkBfycfFNHDn32J7g", True],
+        "Cannabaceae": ["1EUf_M38fr2Fa6J20OqS1jQqtHHgcUnLm7AvgJQW3ghA", True],
+        "Campanulaceae": ["1_bS45r9lEXeN9GkMT8s0C6byOjoM9VNiausNUUlKqsg", True],
         "Basellaceae": ["1B-TLV6aKrp3eyqSvdHuG6z-YoHjvMI1JrC-aRji76ao", False],
-        "Capparaceae": ["1ViObgOHXYTKCHHf_yRa84UxDK34dRiiZrpZr4CgWEZc", False],
-        "Cannaceae": ["1_plRcrI3NLxZldyMMYfI6WOzVkj541R4Lu0_dbEtjKc", False],
-        "Callistricaceae": ["11vu_Od9dwv9yDFPs4TI4NuUhn2iZu86Not1KpbMD0Ck", False],
+        "Capparaceae": ["1ViObgOHXYTKCHHf_yRa84UxDK34dRiiZrpZr4CgWEZc", True],
+        "Cannaceae": ["1_plRcrI3NLxZldyMMYfI6WOzVkj541R4Lu0_dbEtjKc", True],
+        "Callistricaceae": ["11vu_Od9dwv9yDFPs4TI4NuUhn2iZu86Not1KpbMD0Ck", True],
         "Burseraceae": ["1zVgTT8fOYECUhUN0tqmKgIgUv5-_C95CYQBWkAfCgtU", False],
         "Boraginaceae": ["1ICLaRsV4LUvwSUQLSwbrJQSgrDiGa8-20aFujs9UogI", False],
         "Bromelliaceae": ["1_Vu4eUkaknzNT8C4d7zVKJCVE_qdljOPP8gkdHoaZH4", False],
@@ -90,13 +90,13 @@ class LatexGenerator:
         "Araceae": ["1bwrFv_iPJ89UGx115ZoRSqjGRY_m1_p1PifbHRiuPtA", False],
         "Aracaceae": ["1JwrLcL5oJQQJFPxXY-y-rNOrqrLic1Zb7iGRslLeVf4", False],
 #        "Verbenaceae": ["1iMwW2H5y1yEPp6TfjiyxcUwbZP6MInqPbeYym8hg1aI", False],
-        "Chenopodiaceae": ["1qkqO5DL8FM4I9dZuJcMF89X4ZXmuU6wi73Y2K3vx3xQ", False],
+        "Chenopodiaceae": ["1qkqO5DL8FM4I9dZuJcMF89X4ZXmuU6wi73Y2K3vx3xQ", True],
         "Bignoniaceae": ["1zzZ7XG4Alxwf5RX6mNPT3K6gTGM5xegF2xhidmsn6Bo", False],
         "Amaryllidaceae": ["1tbM4IdBSmJRT2NN0AThbW5WNW0eVYHJWOFL0TvI5iYQ", False],
 #        "Nymphaeaceae": ["1xvLM34YgiU2jw-zxdbfEm9r3egZ-fPk9Of2rAxUip1k", False],
         "Anacardiaceae": ["1zCHts6_bkNaD7P-m3MDcGAEzLC9Df_CuvYxzi4amYN0", False],
 #        "Violaceae": ["1ImPm9KK0yCDofc-k8dPkWn2Sk02YrmBDj5S9ZshRZEw", False],
-        "Combretaceae": ["1omT4FKB7wyZ0h6KF-Tc1RtxPi2qBlmpn7hBFLM88IfI", False],
+        "Combretaceae": ["1omT4FKB7wyZ0h6KF-Tc1RtxPi2qBlmpn7hBFLM88IfI", True],
         "Apiaceae": ["1oI_jKwBDmhcRRuQey3YNAEDDKgQbGY6-qStlGN_WkcI", False],
         "Amaranthaceae": ["1UpAvdWhzjti04YIXxa5_FWbbfCQC2Z3hVcryn-VA9xQ", False],
 #        "Fabaceae": ["11La7RwBy_D-10_sDPD5SSyJFKvSnRiJpDmt1r_XeYZQ", False],
@@ -111,7 +111,7 @@ class LatexGenerator:
         "Acanthaceae": ["1vbkdYUAIzmHhqRZCPx_wvImylWM_BqxcuhY2aIKZfuw", False],
         "Aizoiceae": ["1j_GgOSlBSEuzgbUOFU5p9eS8iixgbG-iASnL7u0g718", False],
 #        "Lauraceae": ["1VsMTlVAueUgHgIN2WtUbf7wceLs-F9kNe7M6IGvMiEM", False],
-        "Cucurbitaceae": ["1q0DyiSzb7-CxA_uiK27Hf1Oy7CcjASRI_jjT0Msib8c", False],
+        "Cucurbitaceae": ["1q0DyiSzb7-CxA_uiK27Hf1Oy7CcjASRI_jjT0Msib8c", True],
 #        "Oxalidaceae": ["1wP95w2sYahsU_LVnaXTDR0rGSM3PWgMsU5-5W-XKSZI", False],
 #        "Datiscaceae": ["1bMuTJ-13e3ImBt-0-rITpowW2qxHROs31yJtOtEL9TQ", False],
 #        "Euphorbiaceae": ["1PpIfiJimzCl3r_ZRM0ESy60hPTQjwoLXk57vyXjCwB4", False],
@@ -125,11 +125,11 @@ class LatexGenerator:
 #        "Malvaceae": ["1mcsOGRWQrhGYT8lCb7XCcmAboZNJwVjIJV32ZyawE_s", False],
 #        "Rosaceae": ["1b1oiHVok83hrr3lRdm5ZIPkl-a3V8l32NbU_ZrW1Lrk", False],
 #        "Primulaceae": ["1JBUT0Dv4uZUDHhUQ-a506YsoNECo4F_CONMncL3q5GI", False],
-        "Crassulaceae": ["1inRLht4bZKpOoh6vcRp9D0jW8Ay1cm-Ez-arpHDtc3o", False],
+        "Crassulaceae": ["1inRLht4bZKpOoh6vcRp9D0jW8Ay1cm-Ez-arpHDtc3o", True],
 #        "Zygophyllaceae": ["1in1Si3aOLMbXlR1PMTV2Dx_6dEiNN54GG2uR5itkMws", False],
 #        "Fumariaceae": ["1sreIkDQdI5qje3xosxS4l9Kn9zyBcdEdjHx5T5HX8uQ", False],
 #        "Liliaceae": ["1OfUprilynnynmRt1OHGRVcUZu6KQ5YAUg0Wer1nrPLQ", False],
-        "Convolvulaceae": ["1K6thfNrWFKgduaVnZfIIS6jWVKEOxiFYQaXkPIJt3-E", False],
+        "Convolvulaceae": ["1K6thfNrWFKgduaVnZfIIS6jWVKEOxiFYQaXkPIJt3-E", True],
 #        "Papaveraceae": ["1ibRIKXKuq3fIDuIB_noHLVWn6IGFKXF5MJ5-C0x2N1E", False],
         "Ceratophyllaceae": ["1mjgpjXj0Ab0gb-BAGlMCT_KbFRnPOUCCpD47vBTPHuU", True],
 #        "Portulacaceae": ["1AM3ReBe83slvM7A310ITueBzhgoQOLMtG_JtcLyj45Y", False],
@@ -160,13 +160,13 @@ class LatexGenerator:
 #        "Hypoxidaceae": ["10rw45TEDPvM_56qNf2qqdWKGAhAKdsEwcryzREKKpQM", False],
 #        "Tropeolaceae": ["1A1QG6D3P9kGxjPec6A5Sf-nO77avwAKGYlpmikX4oNQ", False],
 #        "Saxifragaceae": ["1VJt7UHa5CM7WBECrfvP7Ug2fyI60hJH-EhlNBC-CPr8", False],
-        "Cyperaceae": ["1Bdx01EW23p27t9PcMq2ANzXQvwkckDV58ZMY8K5XOio", False],
-        "Chloranthaceae": ["1DwjDVtjZlfjcp8_2AkyzVb11cIPn5hCt2FFQVAfcxmI", False],
-        "Cornaceae": ["1wvbABJ0X9lHr4lbpn7gy7Oyv8byVSUUYKvufS8EnIH8", False],
-        "Commelinaceae": ["1zW6bGIvVNPUFCW33AtKZpvAa_JyRJ4p-pvuy0J78bG4", False],
-        "Coriariaceae": ["1kF8zAixh4WZJj9QDmB9E5guJ4zOAwTiwQyh6Kizryko", False],
-        "Circaeasteraceae": ["14CjFN4Dg9110KNHnbH0RRCAlEA_1sX20nyjaKrlfzh8", False],
-        "Clausiacece": ["1IA7QHJ2osLs-71eKDgLs0pFy8FrBu0O1qQnh3kqUjqU", False],
+        "Cyperaceae": ["1Bdx01EW23p27t9PcMq2ANzXQvwkckDV58ZMY8K5XOio", True],
+        "Chloranthaceae": ["1DwjDVtjZlfjcp8_2AkyzVb11cIPn5hCt2FFQVAfcxmI", True],
+        "Cornaceae": ["1wvbABJ0X9lHr4lbpn7gy7Oyv8byVSUUYKvufS8EnIH8", True],
+        "Commelinaceae": ["1zW6bGIvVNPUFCW33AtKZpvAa_JyRJ4p-pvuy0J78bG4", True],
+        "Coriariaceae": ["1kF8zAixh4WZJj9QDmB9E5guJ4zOAwTiwQyh6Kizryko", True],
+        "Circaeasteraceae": ["14CjFN4Dg9110KNHnbH0RRCAlEA_1sX20nyjaKrlfzh8", True],
+        "Clausiaceae": ["1IA7QHJ2osLs-71eKDgLs0pFy8FrBu0O1qQnh3kqUjqU", True],
 #        "Nyctaginaceae": ["1-ZjpMSUYJuc_Z2mT9eeVLs47GHIVYn5mLyJGv6uLWEw", False],
 #        "Dipterocarpaceae": ["1aQVBWtT41QAAQYdVt-Dva-PUWE2WBegWVjojq2asK-M", False],
 #        "Dioscoriaceae": ["1rHedzPz0HypQa3fTDQyvTW5IZSuMDVHJ_PHbqwuD6FY", False],
@@ -436,8 +436,8 @@ class LatexGenerator:
             values = [val_all[i][1:] for i in range(1, len(val_all))]
         else:
             # remove first row and 9th column from result
-            values = [val_all[i][:9] + val_all[i][10:11] for i in range(1, len(val_all))]
-        #print(values[0])
+            values = [val_all[i][:9] + val_all[i][10:] for i in range(1, len(val_all))]
+        print(values[0])
 
         self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
         for i in range(0, len(values)):

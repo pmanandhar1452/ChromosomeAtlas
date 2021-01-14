@@ -328,16 +328,10 @@ class LatexGenerator:
     def generate_latex_row(self, row):
         # print(f'generate_latex_row({row})')
         
-        
         if self.is_heading_row(row):
             self.output_latex_string('\\vspace{5mm}')
             self.output_latex_string(
                 '\\section{' + self.format_scientific_name(row[self.SPECIES_INDEX]) + '}\n')
-
-        # output chromosome numbers and citation as a separate row
-        self.generate_latex_row_chr_num(row)
-        
-        if self.is_heading_row(row):
 
             if row[self.NEPAL_DIST_INDEX] != '':
                 self.generate_latex_subheading(
@@ -369,7 +363,9 @@ class LatexGenerator:
                     CapStyle.CAP_WORDS)
 
             self.output_latex_string('\\vspace{4mm}\n\n') 
-            
+
+        # output chromosome numbers and citation as a separate row
+        self.generate_latex_row_chr_num(row)
         
     def add_msl(self, in_str):
        return re.sub(r'([0-9]+)', r'\1 msl', in_str)

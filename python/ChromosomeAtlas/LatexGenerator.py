@@ -103,7 +103,7 @@ class LatexGenerator:
         "Iridaceae": ["1OmMboJvHSGEDrVB3FeNqhF81vPjQ6FFKMlJ9T52UX5c", True],
         "Symplocaceae": ["1MWS2_f1BKz5yW2256DdYoGHlUYJ61io-4qdOfieEMq0", True],
         "Sterculiaceae": ["1ZLu75Mgdsfs8nJnMnj0uMVW_ecK83OZN1dz8VW6hYXQ", True],
-        "Sphenucleaceae": ["10cYW2tK38A0PRUIbqjRECn_ejGuWMns-0DUkLz3mogk", True],
+        "Sphenocleaceae": ["10cYW2tK38A0PRUIbqjRECn_ejGuWMns-0DUkLz3mogk", True],
         "Schizandraceae": ["1nFr6x-u2w5dAnnZo8lBUzIRqpP6hxGBP7n1wBFtrxS8", True],
         "Sapotaceae": ["1R98eeZ1k2x2L-_rPYmvUhjcm1GlyvdcohjpM5UmHlmU", True],
         "Sapindaceae": ["14bsCNMYYcr_RVzT2KcIJJPh7B4vBCnE959jY0Zhw_hQ", True],
@@ -433,6 +433,8 @@ class LatexGenerator:
 
     def generate_latex_all_families(self):
         all_families_file = open('output/families.tex', 'w')
+        species_count_csv_file = open('output/species_count.csv', 'w')
+        species_count_csv_file.write("Family,Genus Count,Species Count\n")
         for family in sorted(self.SPREADSHEET_DICT):
             need_processing = self.SPREADSHEET_DICT[family][1]
 
@@ -473,8 +475,11 @@ class LatexGenerator:
                         (genus_article, genus_word, fam_article)
                 )
                 family_count_file.close()
+                species_count_csv_file.write(
+                    f'{family},{self.num_genus_in_fam},{self.num_species_in_fam}\n')
                 time.sleep(2)
         all_families_file.close()
+        species_count_csv_file.close()
             
 
 if __name__ == '__main__':

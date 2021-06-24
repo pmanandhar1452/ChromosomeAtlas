@@ -3,9 +3,9 @@ import glob
 import os
 if __name__ == '__main__':
     os.chdir("output")
-    subprocess.call('xelatex main')
+    subprocess.Popen('xelatex main', shell=True)
     aux_files = glob.glob("./*.aux")
     for af in aux_files:
-        subprocess.call(f'bibtex {af}')
-    subprocess.call('xelatex main')
-    subprocess.call('xelatex main')
+        subprocess.Popen(f'bibtex {af}', shell=True)
+    subprocess.Popen('xelatex main', shell=True)
+    subprocess.Popen('xelatex main', shell=True)

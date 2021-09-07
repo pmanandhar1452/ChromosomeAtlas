@@ -188,6 +188,7 @@ class LatexGenerator:
         "Stachyuraceae": ["1Sch_FW5BcVDa80n8b9tZsjJ1Ky1zE6zQHUQWNHD06q4", True],
         "Tamaricaceae": ["1XzFevAaxT2jvSxxIDmrBSt9NO-kzWTRjJCBfKRyvPZ4", True],
         "Monotropaceae": ["1T28VGvlKTuQiHOIKQ6-J3tZSHzDRc6a5Fxbr2xaZUSs", True],
+        "Trapaceae": ["1MwM9sOsbzMs0IE2vTItEocY-D5_fw4YEbMqoSE0fMgQ", True],
     }
 
     RANGE_ALL  = 'Sheet1!A1:R'

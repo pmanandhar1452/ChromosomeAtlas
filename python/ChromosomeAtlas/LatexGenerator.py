@@ -433,7 +433,10 @@ class LatexGenerator:
         row[self.NEPAL_DIST_INDEX] = row[self.NEPAL_DIST_INDEX].strip(',. ')
 
     def generate_latex_all_families(self):
-        all_families_file = open('output/families.tex', 'w')
+        all_families_fileA = open('output/familiesA.tex', 'w')
+        all_families_fileB = open('output/familiesB.tex', 'w')
+        all_families_fileC = open('output/familiesC.tex', 'w')
+        
         species_count_csv_file = open('output/species_count.csv', 'w')
         species_count_csv_file.write("Family,Genus Count,Species Count\n")
         for family in sorted(self.SPREADSHEET_DICT):
@@ -443,7 +446,12 @@ class LatexGenerator:
             self.num_genus_in_fam = 0
             self.num_species_in_fam = 0
             
-            all_families_file.write('\\include{' + family + '}\n')
+            if re.search(r"^[a-cA-C]", family):
+                all_families_fileA.write('\\include{' + family + '}\n')
+            elif re.search(r"^[d-lD-L]", family):
+                all_families_fileB.write('\\include{' + family + '}\n')
+            else:
+                all_families_fileC.write('\\include{' + family + '}\n')
             
             if need_processing:
                 self.generate_latex(family)
@@ -479,7 +487,9 @@ class LatexGenerator:
                 species_count_csv_file.write(
                     f'{family},{self.num_genus_in_fam},{self.num_species_in_fam}\n')
                 time.sleep(2)
-        all_families_file.close()
+        all_families_fileA.close()
+        all_families_fileB.close()
+        all_families_fileC.close()
         species_count_csv_file.close()
             
 

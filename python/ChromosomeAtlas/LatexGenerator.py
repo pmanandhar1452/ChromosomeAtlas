@@ -31,10 +31,11 @@ class LatexGenerator:
         "FW": "Fw",
         "Mn": "M",
         "PP": "Pp",
-        "Ic": "Pe",
+        "Ic": "A",
         "Pa": "P",
         "Dr": "M",
         "PO": "Po",
+        "Pe": "A"
     }
     all_use_codes = set()
 

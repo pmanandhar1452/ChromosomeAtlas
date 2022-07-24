@@ -27,15 +27,18 @@ class LatexGenerator:
         "V": "E",
         "Oil": "O",
         "Fuel": "Fw",
+        "fl": "Fl",
 
     }
     all_use_codes = set()
 
     def replace_use_codes(self, theset, replacement_dict):
+        newset = theset.copy()
         for e in theset:
             if e in replacement_dict:
-                theset.remove(e)
-                theset.add(replacement_dict[e])
+                newset.remove(e)
+                newset.add(replacement_dict[e])
+        return newset
 
     def add_str_list_to_set(self, theset, comma_sep_values):
         values_list = comma_sep_values.replace(" ", ",").split(",")
@@ -395,7 +398,8 @@ class LatexGenerator:
                 row_use_codes = set()
                 self.add_str_list_to_set(row_use_codes, row[self.USE_CODE_INDEX])
                 row_use_codes = row_use_codes - self.use_acronyms_to_remove
-                self.replace_use_codes(row_use_codes, self.use_acronyms_to_replace)
+                row_use_codes = self.replace_use_codes(
+                    row_use_codes, self.use_acronyms_to_replace)
                 self.all_use_codes |= row_use_codes
                 use_codes_str = self.set_to_string(row_use_codes)
                 self.generate_latex_subheading(

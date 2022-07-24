@@ -21,10 +21,11 @@ class LatexGenerator:
     all_use_codes = set()
 
     def add_str_list_to_set(self, theset, comma_sep_values):
-        values_list = comma_sep_values.split(",")
+        values_list = comma_sep_values.replace(" ", ",").split(",")
         for value in values_list:
             value_s = value.strip()
-            theset |= set([value_s])
+            if len(value_s) > 0:
+                theset |= set([value_s])
 
     def set_to_string(self, theset):
         s = ""
@@ -527,9 +528,9 @@ class LatexGenerator:
         all_families_fileB.close()
         all_families_fileC.close()
         species_count_csv_file.close()
-        
+
         use_codes_file = open('output/all_use_codes.csv', 'w')
-        use_codes_file.write(str(self.all_use_codes))
+        use_codes_file.write(self.set_to_string(self.all_use_codes))
         use_codes_file.close()
             
 

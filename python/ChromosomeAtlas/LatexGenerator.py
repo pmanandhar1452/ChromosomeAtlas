@@ -18,7 +18,24 @@ class LatexGenerator:
     num_species_in_fam = 0
     num_genus_in_fam = 0
     use_acronyms_to_remove = {"Bu", "Wf"}
+    use_acronyms_to_replace = {
+        "Taxonomy": "Ta",
+        "AM": "M",
+        "cond": "S",
+        "spic": "S",
+        "F": "E",
+        "V": "E",
+        "Oil": "O",
+        "Fuel": "Fw",
+
+    }
     all_use_codes = set()
+
+    def replace_use_codes(self, theset, replacement_dict):
+        for e in theset:
+            if e in replacement_dict:
+                theset.remove(e)
+                theset.add(replacement_dict[e])
 
     def add_str_list_to_set(self, theset, comma_sep_values):
         values_list = comma_sep_values.replace(" ", ",").split(",")
@@ -378,6 +395,7 @@ class LatexGenerator:
                 row_use_codes = set()
                 self.add_str_list_to_set(row_use_codes, row[self.USE_CODE_INDEX])
                 row_use_codes = row_use_codes - self.use_acronyms_to_remove
+                self.replace_use_codes(row_use_codes, self.use_acronyms_to_replace)
                 self.all_use_codes |= row_use_codes
                 use_codes_str = self.set_to_string(row_use_codes)
                 self.generate_latex_subheading(
@@ -529,7 +547,7 @@ class LatexGenerator:
         all_families_fileC.close()
         species_count_csv_file.close()
 
-        use_codes_file = open('output/all_use_codes.csv', 'w')
+        use_codes_file = open('output/all_use_codes.csv', 'w', encoding="utf-8")
         use_codes_file.write(self.set_to_string(self.all_use_codes))
         use_codes_file.close()
             

@@ -28,7 +28,13 @@ class LatexGenerator:
         "Oil": "O",
         "Fuel": "Fw",
         "fl": "Fl",
-
+        "FW": "Fw",
+        "Mn": "M",
+        "PP": "Pp",
+        "Ic": "Pe",
+        "Pa": "P",
+        "Dr": "M",
+        "PO": "Po",
     }
     all_use_codes = set()
 

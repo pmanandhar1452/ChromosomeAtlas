@@ -17,6 +17,21 @@ class LatexGenerator:
     current_genus = ''
     num_species_in_fam = 0
     num_genus_in_fam = 0
+    use_codes_set = set()
+    use_acronyms_to_remove = {"Bu", "Wf"}
+
+    def add_str_list_to_set(self, theset, comma_sep_values):
+        values_list = comma_sep_values.split(",")
+        for value in values_list:
+            value_s = value.strip()
+            theset |= set([value_s])
+
+    def set_to_string(self, theset):
+        s = ""
+        for e in theset:
+            s += str(e) + ", "
+        s = s.rstrip(", ")
+        return s
 
     # If modifying these scopes, delete the file token.json.
     SCOPES = 'https://www.googleapis.com/auth/spreadsheets'
@@ -342,7 +357,7 @@ class LatexGenerator:
         self.output_citations_p(bib + '\n\n')
         self.output_latex_string('}\\end{hangparas}\n\n\\vspace{2mm}')
     
-    def generate_latex_row(self, row):
+    def generate_latex_row(self, row, family_name):
         # print(f'generate_latex_row({row})')
         
         if self.is_heading_row(row):
@@ -359,11 +374,16 @@ class LatexGenerator:
                     CapStyle.AS_IS)
             
             if row[self.USE_CODE_INDEX] != '':
+                row_use_codes = set()
+                self.add_str_list_to_set(row_use_codes, row[self.USE_CODE_INDEX])
+                row_use_codes = row_use_codes - self.use_acronyms_to_remove
+                use_codes_str = self.set_to_string(row_use_codes)
                 self.generate_latex_subheading(
                     row, 
                     "Uses",
-                    row[self.USE_CODE_INDEX], self.USE_CODE_BIB_INDEX,
+                    use_codes_str, self.USE_CODE_BIB_INDEX, 
                     CapStyle.AS_IS)
+                self.add_str_list_to_set(self.use_codes_set, use_codes_str)
                         
             if row[self.NEPAL_NAMES_INDEX] != '':
                 self.generate_latex_subheading(
@@ -427,7 +447,9 @@ class LatexGenerator:
             values = [val_all[i][:9] + val_all[i][10:] for i in range(1, len(val_all))]
         print(values[0])
 
+        self.use_codes_set = set()
         self.latex_file = open('output/' + family_name + '.table.tex', 'w', encoding="utf-8")
+        use_code_file = open('output/' + family_name + '.usecodes.csv', 'w', encoding="utf-8")
         for i in range(0, len(values)):
             row = values[i]
             if (len(row) == 0): # skip if empty row
@@ -439,8 +461,10 @@ class LatexGenerator:
                 if row_genus != self.current_genus:
                     self.num_genus_in_fam += 1
                     self.current_genus = row_genus
-            self.generate_latex_row(row)
+            self.generate_latex_row(row, family_name)
+        use_code_file.write(str(self.use_codes_set))
         self.latex_file.close()
+        use_code_file.close()
 
     def move_dist_data(self, row, move_str):
         if not (row[self.NEPAL_DIST_INDEX].isspace()):

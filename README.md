@@ -13,6 +13,13 @@ Get credentials from Google API as described here: https://developers.google.com
 
 ``python3 -m ChromosomeAtlas.LatexGenerator``
 
+## Creating a list of all files in a folder
+Until as database system is adopted, we are using google sheets to enter all data. A google drive folder contains 
+all the data needed for compiling the book. In the folder,
+we separate out by a taxonomic family so that the data can
+we worked on in parallel. It also reflects the structure
+of the book which is organized -- a chapter per family.
+
 ## 2020-Nov-23
 - Working on reviving scripts and testing
 

@@ -28,7 +28,7 @@ def process_part(partName):
 
 if __name__ == '__main__':
     os.chdir("output")
-    #process_part_frontmatter("mainA")
+    process_part_frontmatter("mainA")
     process_part("mainA")
     process_part("mainB")
     process_part("mainC")

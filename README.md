@@ -4,8 +4,9 @@ Chromosome Atlas of Nepal -- Database and Book
 # Python scripts to compile book
 
 ## Dependencies
-``pip3 install google-api-python-client``
+Tested in Python 3.9 with equivalent conda dependencies to the following.
 
+``pip3 install google-api-python-client``
 ``pip3 install oauth2client``
 
 ## How to Run
@@ -19,6 +20,8 @@ all the data needed for compiling the book. In the folder,
 we separate out by a taxonomic family so that the data can
 we worked on in parallel. It also reflects the structure
 of the book which is organized -- a chapter per family.
+
+``python -m ChromosomeAtlas.GetAllFilesInFolder > all_files.txt``
 
 ## 2020-Nov-23
 - Working on reviving scripts and testing

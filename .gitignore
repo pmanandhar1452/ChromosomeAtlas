@@ -1,2 +1,7 @@
 __pycache__
 .vscode
+*.pyc
+*.pickle
+.DS_Store
+client_secret*.json
+*.log

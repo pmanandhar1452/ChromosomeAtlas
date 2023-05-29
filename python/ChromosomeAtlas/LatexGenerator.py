@@ -133,7 +133,7 @@ class LatexGenerator:
         "Daphniphyllaceae": ["1OuvG7KQoqSgZ8OQJRqMIkbClUR5h6XuXuAYcZLPTeR4", True],
         "Datiscaceae": ["1bMuTJ-13e3ImBt-0-rITpowW2qxHROs31yJtOtEL9TQ", False],
         "Dilleniaceae": ["1HGa2AP6kHdY9TAgYGoFbs5iU9XQHnp0uMU4LTMPMgVk", False],
-        "Dioscoreaceae": ["1rHedzPz0HypQa3fTDQyvTW5IZSuMDVHJ_PHbqwuD6FY", False],
+        "Dioscoreaceae": ["1rHedzPz0HypQa3fTDQyvTW5IZSuMDVHJ_PHbqwuD6FY", True],
         "Dipsacaceae": ["1KNDoeE3Qb3XI5uzRQmkSVy-sa0TY01SUOOkvP4Guwv4", False],
         "Dipterocarpaceae": ["1aQVBWtT41QAAQYdVt-Dva-PUWE2WBegWVjojq2asK-M", False],
         "Droseraceae": ["1EtQ8Zo0a7xo6uccacBBrFKDn84YNx4bPFJHlyrjoqQ0", False],

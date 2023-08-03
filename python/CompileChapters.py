@@ -5,8 +5,8 @@ import os
 RUN_BIBTEX_FRONT = True
 RUN_BIBTEX_PARTS = True
 RUN_PART_A = False
-RUN_PART_B = True
-RUN_PART_C = False
+RUN_PART_B = False
+RUN_PART_C = True
 
 
 def process_part_frontmatter(partName):

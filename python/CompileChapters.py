@@ -7,6 +7,7 @@ RUN_BIBTEX_PARTS = True
 RUN_PART_A = False
 RUN_PART_B = False
 RUN_PART_C = True
+RUN_PART_D = False
 
 
 def process_part_frontmatter(partName):
@@ -17,15 +18,8 @@ def process_part_frontmatter(partName):
         p.wait()
 
     if RUN_BIBTEX_PARTS:
-        if RUN_PART_A:
-            p = subprocess.Popen(f"xelatex {partName}", shell=True)
-            p.wait()
-        if RUN_PART_B:
-            p = subprocess.Popen(f"xelatex {partName}", shell=True)
-            p.wait()
-        if RUN_PART_C:
-            p = subprocess.Popen(f"xelatex {partName}", shell=True)
-            p.wait()
+        p = subprocess.Popen(f"xelatex {partName}", shell=True)
+        p.wait()
 
 
 def process_part(partName):
@@ -50,3 +44,5 @@ if __name__ == "__main__":
         process_part("mainB")
     if RUN_PART_C:
         process_part("mainC")
+    if RUN_PART_D:
+        process_part("mainD")
